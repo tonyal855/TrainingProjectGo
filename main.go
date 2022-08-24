@@ -2,14 +2,23 @@ package main
 
 import "fmt"
 
-func main() {
+type Person struct {
+	name string
+}
 
-	for i := 0; i <= 10; i++ {
-		if i%2 == 0 {
-			fmt.Println(i, "GENAP")
-		} else {
-			fmt.Println(i, "GANJIL")
+func main() {
+	var NameF = func(persons []*Person) []*Person {
+		res := []*Person{}
+		for _, data := range persons {
+			fmt.Println(data.name)
+			res = append(res, data)
 		}
+		return res
 	}
 
+	var anto = Person{name: "anto"}
+	var rara = Person{name: "rara"}
+
+	list_name := []*Person{&anto, &rara}
+	fmt.Println(NameF(list_name))
 }
