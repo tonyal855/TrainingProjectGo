@@ -1,24 +1,22 @@
 package main
 
-import "fmt"
-
-type Person struct {
-	name string
-}
+import (
+	service "TestProject/TrainingProjectGo/services"
+	"fmt"
+)
 
 func main() {
-	var NameF = func(persons []*Person) []*Person {
-		res := []*Person{}
-		for _, data := range persons {
-			fmt.Println(data.name)
-			res = append(res, data)
-		}
-		return res
+	var db []*service.User
+	usr := service.NewUserService(db)
+	res := usr.Regis(&service.User{Nama: "Budi"})
+	fmt.Println(res)
+
+	res2 := usr.Regis(&service.User{Nama: "Jamal"})
+	fmt.Println(res2)
+
+	getUser := usr.GetUser()
+
+	for i, data := range getUser {
+		fmt.Println(i, data)
 	}
-
-	var anto = Person{name: "anto"}
-	var rara = Person{name: "rara"}
-
-	list_name := []*Person{&anto, &rara}
-	fmt.Println(NameF(list_name))
 }
