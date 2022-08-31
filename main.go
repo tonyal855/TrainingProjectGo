@@ -3,6 +3,7 @@ package main
 import (
 	service "TestProject/TrainingProjectGo/services"
 	"fmt"
+	"sync"
 )
 
 func main() {
@@ -15,8 +16,16 @@ func main() {
 	fmt.Println(res2)
 
 	getUser := usr.GetUser()
-
+	fmt.Print(getUser)
+	var wg sync.WaitGroup
 	for i, data := range getUser {
-		fmt.Println(i, data)
+		wg.Add(1)
+		go CetakNama(i, data.Nama, &wg)
 	}
+	wg.Wait()
+}
+
+func CetakNama(index int, nama string, wg *sync.WaitGroup) {
+	fmt.Println(nama, index)
+	wg.Done()
 }

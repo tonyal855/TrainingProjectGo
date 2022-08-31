@@ -1,7 +1,12 @@
 package service
 
+import (
+	"encoding/json"
+	"net/http"
+)
+
 type User struct {
-	Nama string
+	Nama string `json:"nama"`
 }
 
 type UserService struct {
@@ -9,6 +14,8 @@ type UserService struct {
 }
 
 type UserIface interface {
+	RegisterHandler(w http.ResponseWriter, r *http.Request)
+	GetuserHandler(w http.ResponseWriter, r *http.Request)
 	Regis(u *User) string
 	GetUser() []*User
 }
@@ -24,6 +31,28 @@ func (u *UserService) Regis(user *User) string {
 
 func (u *UserService) GetUser() []*User {
 	return u.Db
+}
+
+func (u *UserService) RegisterHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	if r.Method == "POST" {
+		name := r.FormValue("name")
+
+		res := u.Regis(&User{Nama: name})
+
+		json.NewEncoder(w).Encode(res)
+		return
+
+	}
+}
+
+func (u *UserService) GetuserHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	if r.Method == "GET" {
+		getUser := u.GetUser()
+		json.NewEncoder(w).Encode(&getUser)
+		return
+	}
 }
 
 // func (u *UserService) GetList(User *User) string {
