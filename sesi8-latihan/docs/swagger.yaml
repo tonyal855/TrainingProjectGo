@@ -1,0 +1,130 @@
+basePath: /
+definitions:
+  params.Person:
+    properties:
+      address:
+        type: string
+      name:
+        type: string
+    type: object
+  views.GetAllPeopleSwagger:
+    properties:
+      error: {}
+      message:
+        example: GET_SUCCESS
+        type: string
+      payload:
+        items:
+          $ref: '#/definitions/params.Person'
+        type: array
+      status:
+        example: 200
+        type: integer
+    type: object
+info:
+  contact:
+    email: toni@gmail.com
+    name: Toni
+  description: Sample API Spec for Orders
+  termsOfService: http://swagger.io/terms/
+paths:
+  /people:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.GetAllPeopleSwagger'
+      summary: Get all people
+      tags:
+      - person
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create People
+        in: body
+        name: People
+        required: true
+        schema:
+          $ref: '#/definitions/params.Person'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.GetAllPeopleSwagger'
+      summary: Create people
+      tags:
+      - person
+  /people/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: People ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.GetAllPeopleSwagger'
+      summary: Delete people
+      tags:
+      - person
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: People ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update People
+        in: body
+        name: People
+        required: true
+        schema:
+          $ref: '#/definitions/params.Person'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.GetAllPeopleSwagger'
+      summary: Update people
+      tags:
+      - person
+  /people_detail/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: People ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.GetAllPeopleSwagger'
+      summary: Get people
+      tags:
+      - person
+swagger: "2.0"

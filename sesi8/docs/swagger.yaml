@@ -1,0 +1,34 @@
+definitions:
+  main.Response:
+    properties:
+      message:
+        type: string
+      payload: {}
+      status:
+        example: 200
+        type: integer
+    type: object
+host: localhost:4000/docs
+info:
+  contact: {}
+  description: Sample Api Order
+  title: Orders api
+  version: v1.0
+paths:
+  /orders:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.Response'
+            type: array
+      summary: Get All order
+      tags:
+      - order
+swagger: "2.0"
