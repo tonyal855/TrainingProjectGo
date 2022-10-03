@@ -1,0 +1,141 @@
+basePath: /
+definitions:
+  models.ReqItems:
+    properties:
+      description:
+        type: string
+      item_code:
+        type: string
+      quantity:
+        type: integer
+    type: object
+  models.ReqOrders:
+    properties:
+      customerName:
+        type: string
+      items:
+        items:
+          $ref: '#/definitions/models.ReqItems'
+        type: array
+    type: object
+  models.UpItems:
+    properties:
+      description:
+        type: string
+      id:
+        type: integer
+      item_code:
+        type: string
+      quantity:
+        type: integer
+    type: object
+  models.UpOrders:
+    properties:
+      customerName:
+        type: string
+      items:
+        items:
+          $ref: '#/definitions/models.UpItems'
+        type: array
+    type: object
+  views.GetAllOrdersSwagger:
+    properties:
+      error: {}
+      message:
+        example: GET_SUCCESS
+        type: string
+      payload:
+        items:
+          $ref: '#/definitions/models.ReqOrders'
+        type: array
+      status:
+        example: 200
+        type: integer
+    type: object
+info:
+  contact:
+    email: toni@gmail.com
+    name: Toni
+  description: Sample API Spec for Orders
+  termsOfService: http://swagger.io/terms/
+paths:
+  /orders:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.GetAllOrdersSwagger'
+      summary: Get orders
+      tags:
+      - orders
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create Orders
+        in: body
+        name: Orders
+        required: true
+        schema:
+          $ref: '#/definitions/models.ReqOrders'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.GetAllOrdersSwagger'
+      summary: Create orders
+      tags:
+      - orders
+  /orders/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Orders ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.GetAllOrdersSwagger'
+      summary: Delete orders
+      tags:
+      - person
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: Orders ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update Orders
+        in: body
+        name: Orders
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpOrders'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.GetAllOrdersSwagger'
+      summary: Update orders
+      tags:
+      - orders
+swagger: "2.0"
